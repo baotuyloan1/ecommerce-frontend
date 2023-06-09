@@ -46,6 +46,7 @@ const Products = () => {
           <div className="inputItem">
             <span>0</span>
             <input
+            className="range"
               type="range"
               min={0}
               max={1000}
