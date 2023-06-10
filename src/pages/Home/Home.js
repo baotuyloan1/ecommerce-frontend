@@ -7,9 +7,9 @@ import Contact from '../../components/Contact/Contact'
 const Home = () => {
 
     return <div className='home'><Slider/>
-        <FeaturedProducts type="featured"/>
+        <FeaturedProducts categoryId="1002" category="laptop"/>
         <Categories/>
-        <FeaturedProducts type="trending"/>
+        <FeaturedProducts categoryId="1003" category="phone"/>
         <Contact/>
     </div>
 }

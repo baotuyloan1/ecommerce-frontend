@@ -1,48 +1,39 @@
 import axios from "axios";
 import Card from "../Card/Card";
-import "./FeaturedProducts.scss"
+import "./FeaturedProducts.scss";
 import { useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
-const FeaturedProducts = ({ type }) => {
+const FeaturedProducts = ({ categoryId, category }) => {
 
-    const [products, setProducts] = useState([]);
+    const{data, loading, error} = useFetch(`/products/filters?categories=${categoryId}`)
 
-    useEffect(() => {
-        // fetch('http://localhost:8080/api/products/').then(
-        //     res => res.json()).then(data => {
-        //         if (data['_embedded']['laptopDtoList'] && data['_embedded']['phoneDtoList']) {
-        //             return setProducts(data['_embedded']['laptopDtoList'].concat(data['_embedded']['phoneDtoList']))
+    if(!loading){
+        console.log(loading)
+        console.log('featured products',data)
+    }
 
-        //         }
+  return (
+    <div className="featuredProducts">
+      <div className="top">
+        <h1>{category} products</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+      <div className="bottom">
+        {error? "Something went wrong" :loading ? "loading" : data?.map((item) => (
+          <Card item={item} key={item?.id} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-
-        //     })
-        const fetchData = async()=>{
-            try{
-                const res = await axios.get(process.env.REACT_APP_API_URL+"/products")
-                setProducts(res.data['_embedded']['laptopDtoList']?.concat(res.data['_embedded']?.['phoneDtoList']));
-            }catch(err){
-                console.log(err);
-            }
-        }
-        fetchData();
-        
-    }, [])
-
-
-    return (
-        <div className='featuredProducts'>
-            <div className='top'>
-                <h1>{type} products</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-            <div className='bottom'>
-                {products.map(item => (
-                    <Card item={item} key={item.id} />
-                ))}
-            </div>
-        </div>
-    )
-}
-
-export default FeaturedProducts
+export default FeaturedProducts;

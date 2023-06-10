@@ -3,14 +3,16 @@ import "./Products.scss";
 import "../../components/List/List";
 import List from "../../components/List/List";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 const Products = () => {
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sort, setSort] = useState(null);
   const catId = parseInt(useParams()["id"]);
 
-  // const [categories, setCategories] = useState
+  const {data, loading, error} = useFetch(`/products/filters?categories=${catId}`)
 
+console.log(`Catid = ${catId}`,data)
   return (
     <div className="products">
       <div className="left">

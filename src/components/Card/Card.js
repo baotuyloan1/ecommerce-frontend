@@ -6,7 +6,7 @@ const urlImg = 'http://localhost:8080'
 
 function Card({item}) {
   return (
-    <Link className='link' to={`/product/${item.id}`}>
+    <Link className='link' to={`/product/${item?.id}`}>
     <div className='card'>
         <div className='image'>
             {true && <span>New Season</span>}
@@ -15,7 +15,7 @@ function Card({item}) {
         </div>
         <h2>{item.name}</h2>
         <div className='prices'>
-            <h3>${item.price}</h3>
+            <h3>${item.oldPrice || item.price + 20}</h3>
             <h3>${item.price}</h3>
         </div>
     </div>

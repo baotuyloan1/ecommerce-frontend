@@ -11,7 +11,6 @@ const Slider = () => {
         'http://localhost:8080/images/slider-photos/2215307.jpg',]
 
     const prevSlide = () => {
-        console.log(currentSlide)
         setCurrentSlide(currentSlide === 0 ? 2 : (prev) => prev - 1);
     }
 
