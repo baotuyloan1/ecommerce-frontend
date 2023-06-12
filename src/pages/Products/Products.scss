@@ -29,6 +29,13 @@
 
   .right {
     flex: 3;
+
+    .page{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
   }
 
   .catImg {

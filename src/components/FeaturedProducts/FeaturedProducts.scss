@@ -20,7 +20,11 @@
 
     .bottom{
         display: flex;
-        justify-content: center;
+        // justify-content: center;
         gap: 50px;
+        
+        // background-color: #333;
+        overflow: auto;
+        white-space: nowrap;
     }
 }

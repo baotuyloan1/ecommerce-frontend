@@ -6,12 +6,9 @@ import useFetch from "../../hooks/useFetch";
 
 const FeaturedProducts = ({ categoryId, category }) => {
 
-    const{data, loading, error} = useFetch(`/products/filters?categories=${categoryId}`)
+    const{data, loading, error} = useFetch(`/products/filters/1?categories=${categoryId}`)
 
-    if(!loading){
-        console.log(loading)
-        console.log('featured products',data)
-    }
+ 
 
   return (
     <div className="featuredProducts">
@@ -28,7 +25,7 @@ const FeaturedProducts = ({ categoryId, category }) => {
         </p>
       </div>
       <div className="bottom">
-        {error? "Something went wrong" :loading ? "loading" : data?.map((item) => (
+        {error? "Something went wrong" :loading ? "loading" : data?.['content'].map((item) => (
           <Card item={item} key={item?.id} />
         ))}
       </div>
