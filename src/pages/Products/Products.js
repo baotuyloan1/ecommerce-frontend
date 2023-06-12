@@ -25,7 +25,7 @@ const Products = () => {
   }, [params]);
 
   const { data, loading, error } = useFetch(
-    `/products/filters/${page}?categories=${filterCategories}&brands=${brands}`
+    `/products/filters/${page}?categories=${filterCategories}&brands=${brands}&maxPrice=${maxPrice}&sortPrice=${sort}`
   );
 
   const [resultProducts, setResultProducts] = useState([]);
@@ -90,7 +90,7 @@ const Products = () => {
     setResultProducts(() => {
       return data?.content.filter((item) => item.price >= maxPrice);
     });
-  }, [maxPrice, data]);
+  }, [maxPrice]);
 
   return (
     <div className="products">
@@ -180,7 +180,7 @@ const Products = () => {
           // catId={catId}
           maxPrice={maxPrice}
           sort={sort}
-          products={resultProducts}
+          products={data?.content}
         />
 
         <div className="page">

@@ -6,7 +6,7 @@ const urlImg = 'http://localhost:8080'
 
 function Card({item}) {
   return (
-    <Link className='link' to={`/product/${item?.id}`}>
+    <Link className='link' product={item} to={`/product/${item?.id}`}>
     <div className='card'>
         <div className='image'>
             {true && <span>New Season</span>}
