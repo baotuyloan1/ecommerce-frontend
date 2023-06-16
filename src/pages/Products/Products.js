@@ -7,7 +7,7 @@ import useFetch from "../../hooks/useFetch";
 import Categories from "../../components/Catrgories/Categories";
 
 const Products = () => {
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(300);
   const [sort, setSort] = useState(null);
   const [page, setPage] = useState(1);
   const [filterCategories, setFilterCategories] = useState([

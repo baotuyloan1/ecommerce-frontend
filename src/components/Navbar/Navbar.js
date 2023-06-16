@@ -10,10 +10,12 @@ import "./Navbar.scss";
 import Cart from "../Cart/Cart";
 import { useState } from "react";
 import useFetch from "../../hooks/useFetch";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const { data, loading, error } = useFetch(`/categories/root-categories`);
 
+  const products = useSelector((state)=> state.cart.products);
 
   const [open, setOpen] = useState(false);
   return (
@@ -73,7 +75,7 @@ const Navbar = () => {
             <FavoriteBorderOutlined />
             <div className="cartIcon" onClick={() => setOpen((prev) => !prev)}>
               <ShoppingCartOutlined />
-              <span>0</span>
+              <span>{products.length}</span>
             </div>
           </div>
         </div>

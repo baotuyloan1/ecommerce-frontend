@@ -1,26 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Product.scss";
 import { AddShoppingCart, Balance, FavoriteBorder } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import {useDispatch} from "react-redux";
+import { addToCart } from "../../redux/cartReducer";
 const Product = () => {
   const [selectedImg, setSelectedImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const productId = parseInt(useParams()["id"]);
   const [images, setImages] = useState([]);
+  const dispatch = useDispatch();
 
   const { data, loading, error } = useFetch(`/products/${productId}`);
 
-  useFetch(() => {
-    if (!loading && data?.["imageDetailDtoSet"].length > 0) {
-      console.log(data?.["imageDetailDtoSet"], "AAAA");
-      setImages(data?.["imageDetailDtoSet"]);
+  useEffect(() => {
+    if(!loading && data !=null){
+      setImages(data['imagesDetail'])
     }
-  }, [data,loading]);
-  // if (!loading && data?.["imageDetailDtoSet"].length > 0) {
-  //   console.log(data?.["imageDetailDtoSet"])
-  //   setImages(data?.["imageDetailDtoSet"]);
-  // }
+    
+  }, [data]);
 
   return (
     <div className="product">
@@ -30,26 +29,19 @@ const Product = () => {
             ? "loading"
             : images.length <= 0
             ? "loading images"
-            : images.map((item) => (
-                <img src={item["url"]} onClick={() => setSelectedImg(1)} />
+            : images.map((item,index) => (
+                <img src={`${process.env.REACT_APP_RESOURCE}${item["url"]}`} onClick={() => setSelectedImg(index)} />
               ))}
-          {/* <img src={images[1]} onClick={() => setSelectedImg(1)} /> */}
         </div>
         <div className="mainImg">
-          <img src={images[selectedImg]} />
+          <img src={process.env.REACT_APP_RESOURCE+images?.[selectedImg]?.['url']} />
         </div>
       </div>
       <div className="right">
         <h1>{!loading && data?.name}</h1>
-        <span className="price">$199</span>
+        <span className="price">{!loading && data?.price}</span>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          {!loading && data?.description}
         </p>
         <div className="quantity">
           <button
@@ -58,9 +50,16 @@ const Product = () => {
             -
           </button>
           {quantity}
-          <button onClick={() => setQuantity((prev) => prev - 1)}>+</button>
+          <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
         </div>
-        <button className="add">
+        <button className="add" onClick={()=>dispatch(addToCart({
+          id:data.id,
+          title: data.name,
+          desc:data.description,
+         img: data.imgUrl,
+         quantity: quantity,
+         price: data.price
+        }))}>
           <AddShoppingCart />
           ADD TO CART
         </button>

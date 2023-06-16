@@ -11,7 +11,7 @@ function Card({item}) {
         <div className='image'>
             {true && <span>New Season</span>}
             <img src={`${urlImg}${item.imgUrl}`} className='mainImg'/>
-            {item.imageDetailDtoSet.length > 0  && <img className='secondImg' src={urlImg+item.imageDetailDtoSet[0]['url']}></img>} 
+            {item.imagesDetail.length > 0  && <img className='secondImg' src={urlImg+item.imagesDetail[0]['url']}></img>} 
         </div>
         <h2>{item.name}</h2>
         <div className='prices'>
